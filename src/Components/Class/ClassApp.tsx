@@ -4,37 +4,38 @@ import { ClassGameBoard } from "./ClassGameBoard";
 import { ClassFinalScore } from "./ClassFinalScore";
 import { initialFishes } from "../../fishData";
 
-
 export class ClassApp extends Component {
   state = {
-    answersLeft: initialFishes.map((fish) => fish.name),
-    questionIndex: 0,
     correctCount: 0,
-    incorrectCount: 0
+    incorrectCount: 0,
   };
 
   checkAnswer = (fishName: string) => {
+    const { correctCount, incorrectCount } = this.state;
+    const currentFishIndex = correctCount + incorrectCount;
 
-    const { answersLeft, correctCount, incorrectCount, questionIndex } = this.state;
+    const updateStateProperty = initialFishes[currentFishIndex].name === fishName
+      ? 'correctCount'
+      : 'incorrectCount';
 
-    const isCorrect = initialFishes[questionIndex].name === fishName;
-
-    this.setState({ 
-      correctCount: correctCount + (isCorrect ? 1 : 0),
-      incorrectCount: incorrectCount + (isCorrect ? 0 : 1),
-      questionIndex: questionIndex + 1,
-      answersLeft: answersLeft.slice(1),
-     })
+    this.setState((curState: typeof this.state) => ({
+      [updateStateProperty] : curState[updateStateProperty] + 1
+    }));
   };
 
   render() {
-    const { answersLeft, incorrectCount, correctCount, questionIndex } = this.state;
+    const { incorrectCount, correctCount } = this.state;
 
-    const totalCount = incorrectCount + correctCount;
+    const totalCount = initialFishes.length;
+    const questionIndex = correctCount + incorrectCount;
+    const answersLeft = initialFishes
+      .map((fish) => fish.name)
+      .slice(questionIndex);
+    const gameOver = questionIndex >= totalCount;
 
     return (
       <>
-        {totalCount < 4 ? (
+        {!gameOver ? (
           <>
             <ClassScoreBoard
               incorrectCount={incorrectCount}

@@ -1,6 +1,5 @@
 import { Component } from "react";
 import "./styles/score-board.css";
-
 import { ScoreBoard } from "../../types";
 
 export class ClassScoreBoard extends Component<ScoreBoard> {

@@ -1,8 +1,11 @@
 import "./styles/score-board.css";
 import { ScoreBoard } from "../../types";
 
-
-export function FunctionalScoreBoard({ incorrectCount, correctCount, answersLeft }: ScoreBoard) {
+export function FunctionalScoreBoard({
+  incorrectCount,
+  correctCount,
+  answersLeft,
+}: ScoreBoard) {
   return (
     <div id="score-board">
       <div>Incorrect 🔻: {incorrectCount}</div>

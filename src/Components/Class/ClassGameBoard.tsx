@@ -1,19 +1,15 @@
 import { Component, FormEvent, ChangeEvent } from "react";
 import "./styles/game-board.css";
-
 import { GameBoard } from "../../types";
 
 export class ClassGameBoard extends Component<GameBoard> {
-
   state = {
-    answer: ""
+    answer: "",
   };
 
   formSubmission = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { answer } = this.state;
-    const { checkAnswer } = this.props;
-    checkAnswer(answer.toLowerCase());
+    this.props.checkAnswer(this.state.answer.toLowerCase());
     this.setState({ answer: "" });
   };
 
@@ -22,26 +18,23 @@ export class ClassGameBoard extends Component<GameBoard> {
   };
 
   render() {
-
     const { fishInfo } = this.props;
-    const { answer } = this.state;
-
     return (
       <div id="game-board">
-      <div id="fish-container">
-        <img src={fishInfo.url} alt={fishInfo.name} />
+        <div id="fish-container">
+          <img src={fishInfo.url} alt={fishInfo.name} />
+        </div>
+        <form id="fish-guess-form" onSubmit={this.formSubmission}>
+          <label htmlFor="fish-guess">What kind of fish is this?</label>
+          <input
+            type="text"
+            name="fish-guess"
+            value={this.state.answer}
+            onChange={this.formChange}
+          />
+          <input type="submit" />
+        </form>
       </div>
-      <form id="fish-guess-form" onSubmit={this.formSubmission}>
-        <label htmlFor="fish-guess">What kind of fish is this?</label>
-        <input
-          type="text"
-          name="fish-guess"
-          value={answer}
-          onChange={this.formChange}
-        />
-        <input type="submit" />
-      </form>
-    </div>
     );
   }
 }

@@ -1,5 +1,4 @@
 import "./styles/game-board.css";
-
 import { GameBoard } from "../../types";
 import { ChangeEvent, useState, FormEvent } from "react";
 
